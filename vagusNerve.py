@@ -7,7 +7,7 @@ from scipy.stats import wasserstein_distance
 def get_error(signal):
 
     
-    rawData = loadmat('Data/eCAPSdata_220303.mat')
+    rawData = loadmat('eCAPSdata_220303.mat')
     a500 = list(rawData['eCAPSdata_220328'][0][-5])
     
     rawSignal = a500[1][-1]-a500[1][0]
@@ -20,9 +20,9 @@ def get_error(signal):
 
     rawSignal /= np.max(np.abs(rawSignal))
     
-    tmin=-3 # In s
-    tmax=3 # In s
-    nx=500000
+    tmin=-1 # In s
+    tmax=1 # In s
+    nx=100000
     tphi=np.arange(tmin,tmax,(tmax-tmin)/(nx-1))
     
     time = tphi[1:-1]*1e3

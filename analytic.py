@@ -672,10 +672,10 @@ def write_fascicle_signals(distribution_params, iteration=0, index=0):
 
     aps = [ap]
 
-    nx=500000
+    nx=100000
 
-    tmin=-3 # In s
-    tmax=3 # In s
+    tmin=-1 # In s
+    tmax=1 # In s
     tphi=np.arange(tmin,tmax,(tmax-tmin)/(nx-1))
 
     current = np.array([500])/28.6
@@ -694,6 +694,7 @@ def write_fascicle_signals(distribution_params, iteration=0, index=0):
 
     phiWeight0, phiWeight1 = getPhiWeight(d,current,fascIdx, fascTypes,distribution_params) # Scaling factor for each diameter
 
+    
     phi = [0,0]
 
 
@@ -707,7 +708,6 @@ def write_fascicle_signals(distribution_params, iteration=0, index=0):
     ### For each diameter, defines a shifted and scaled exposure function
     phiShape0 = PhiShape(velocityList[0],tphi,phiFunc)
     
-    
    #############
 
 
@@ -718,15 +718,19 @@ def write_fascicle_signals(distribution_params, iteration=0, index=0):
     scaling00 = phiWeight0.T*scaling0[:,np.newaxis]
     scaling10 = phiWeight1.T*scaling0[:,np.newaxis]
 
+    print(phiShape0.shape)
+    print(scaling00.shape) 
     
+    t = time.time()
+    phi0 = np.matmul(phiShape0.T,scaling00)
+    print(time.time()-t)
     
-    phi[0] += np.matmul(phiShape0.T,scaling00)
-    
-    phi[1] += np.matmul(phiShape0.T,scaling10)
+    phi1 = np.matmul(phiShape0.T,scaling10)
 
+    print(time.time()-t)
 
-
-    phi = np.array(phi)
+    phi = np.array([phi0,phi1])
+    print(phi.size*phi.itemsize)
     
 ################
 
@@ -764,7 +768,7 @@ def write_fascicle_signals(distribution_params, iteration=0, index=0):
 
     for typeIdx in range(len(names)):
 
-        np.save('signals/'+names[typeIdx]+'/'+str(iteration)+'/'+str(index)+'/signals_'+str(fascIdx)+'.npy',signals[typeIdx])
+        np.save('signals/'+names[typeIdx]+'/signals_'+str(fascIdx)+'.npy',signals[typeIdx])
 
 
 if __name__=="__main__":

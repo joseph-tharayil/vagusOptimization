@@ -14,6 +14,7 @@ variables
 
 interface
 	fork asynchronous
+	  evaluation_concurrency=1
 	  analysis_drivers = 'driver.sh {PARAMETERS} {RESULTS}'
 	  parameters_file = 'params.in'
 	  results_file    = 'results.out'

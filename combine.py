@@ -12,7 +12,7 @@ def combine_signals():
 
     for typeIdx in range(2):
 
-        for fascIdx in range(39):
+        for fascIdx in range(1):
 
             totalSignal += np.load('signals/'+names[typeIdx]+'/signals_'+str(fascIdx)+'.npy')
 
