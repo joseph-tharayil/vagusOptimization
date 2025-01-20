@@ -1,6 +1,7 @@
 import dakota.interfacing as di
 import numpy as np
 from vagusNerve import run_vagus_nerve
+import sys
 
 def get_input(params):
 
@@ -20,9 +21,9 @@ def pack_dakota_results(analytic_output,results):
 
     return results
 
-def main():
+def main(input,output):
 
-    params, results = di.read_parameters_file(parameters_file='params.in',results_file='results.out')
+    params, results = di.read_parameters_file(parameters_file=input,results_file=output)
 
     analytic_input = get_input(params)
 
@@ -32,4 +33,7 @@ def main():
     results.write()
 
 if __name__=='__main__':
-    main()
+    
+    input = sys.argv[1]
+    output = sys.argv[2]
+    main(input,output)

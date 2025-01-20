@@ -2,7 +2,8 @@
 
 method
 	coliny_ea
-    max_iterations = 1
+        population_size = 5
+        max_iterations = 1
 
 variables
 	  continuous_design = 4
@@ -12,10 +13,11 @@ variables
 	  descriptor      'x0'     'y0'      'x1'      'y1'
 
 interface
-	fork
-	  analysis_drivers = 'driver.sh'
+	fork asynchronous
+	  analysis_drivers = 'driver.sh {PARAMETERS} {RESULTS}'
 	  parameters_file = 'params.in'
 	  results_file    = 'results.out'
+	  file_tag
 	   
 responses
 	num_objective_functions = 1

@@ -1,4 +1,7 @@
+*.rst
 *.out
 *.swp
 .ipynb_checkpoints/
 *.npy
+Data/
+*.mat

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.io import loadmat
 from scipy.stats import wasserstein_distance
 
-rawData = loadmat('/gpfs/bbp.cscs.ch/project/proj85/vagusNerve/vagusNerveCode/eCAPSdata_220303.mat')
+rawData = loadmat('Data/eCAPSdata_220303.mat')
 a500 = list(rawData['eCAPSdata_220328'][0][-5])
 
 rawSignal = a500[1][-1]-a500[1][0]
@@ -31,7 +31,7 @@ for t in rawTime:
 def get_error_scaled(signal):
 
     
-    rawData = loadmat('/gpfs/bbp.cscs.ch/project/proj85/vagusNerve/vagusNerveCode/eCAPSdata_220303.mat')
+    rawData = loadmat('Data/eCAPSdata_220303.mat')
     a500 = list(rawData['eCAPSdata_220328'][0][-5])
     
     rawSignal = a500[1][-1]-a500[1][0]
@@ -64,7 +64,7 @@ def get_error_scaled(signal):
 def get_error(signal):
 
     
-    rawData = loadmat('/gpfs/bbp.cscs.ch/project/proj85/vagusNerve/vagusNerveCode/eCAPSdata_220303.mat')
+    rawData = loadmat('Data/eCAPSdata_220303.mat')
     a500 = list(rawData['eCAPSdata_220328'][0][-5])
     
     rawSignal = a500[1][-1]-a500[1][0]
@@ -121,8 +121,8 @@ if __name__=='__main__':
                     try:
     
                         for i in range(39):
-                            signal += np.load('/gpfs/bbp.cscs.ch/project/proj85/scratch/vagusNerve/optimization/signals/maff/'+str(j)+'/'+str(index)+'/signals_'+str(i)+'.npy')
-                            signal += np.load('/gpfs/bbp.cscs.ch/project/proj85/scratch/vagusNerve/optimization/signals/meff/'+str(j)+'/'+str(index)+'/signals_'+str(i)+'.npy')
+                            signal += np.load('signals/maff/'+str(j)+'/'+str(index)+'/signals_'+str(i)+'.npy')
+                            signal += np.load('signals/meff/'+str(j)+'/'+str(index)+'/signals_'+str(i)+'.npy')
         
                     
                         error = get_error(signal)
