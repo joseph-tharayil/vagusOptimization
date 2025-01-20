@@ -13,8 +13,7 @@ variables
 	  descriptor      'x0'     'y0'      'x1'      'y1'
 
 interface
-	fork asynchronous
-	  evaluation_concurrency=1
+	fork
 	  analysis_drivers = 'driver.sh {PARAMETERS} {RESULTS}'
 	  parameters_file = 'params.in'
 	  results_file    = 'results.out'

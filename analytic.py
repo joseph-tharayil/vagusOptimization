@@ -35,10 +35,10 @@ def getAreaScaleFactor():
     ####
     
     #### Loads diameter distributions
-    maffvals = np.loadtxt('Data/maffvals.csv',delimiter=',')
-    meffvals = np.loadtxt('Data/meffvalsSmooth.csv',delimiter=',')
-    uaffvals = np.loadtxt('Data/uaffvals.csv',delimiter=',')
-    ueffvals = np.loadtxt('Data/ueffvals.csv',delimiter=',')
+    maffvals = np.loadtxt('../../Data/maffvals.csv',delimiter=',')
+    meffvals = np.loadtxt('../../Data/meffvalsSmooth.csv',delimiter=',')
+    uaffvals = np.loadtxt('../../Data/uaffvals.csv',delimiter=',')
+    ueffvals = np.loadtxt('../../Data/ueffvals.csv',delimiter=',')
     #####
     
     #### Gets midpoints of histogram bins
@@ -90,11 +90,11 @@ def getNumFibers(fascicleArea,diamScaleFactor,fascIdx,fascTypes):
     
     
     ##### Loads diameter distribution histograms
-    maffvals = np.loadtxt('Data/maffvals.csv',delimiter=',')
-    meffvals = np.loadtxt('Data/meffvalsSmooth.csv',delimiter=',')
+    maffvals = np.loadtxt('../../Data/maffvals.csv',delimiter=',')
+    meffvals = np.loadtxt('../../Data/meffvalsSmooth.csv',delimiter=',')
 
-    uaffvals = np.loadtxt('Data/uaffvals.csv',delimiter=',')
-    ueffvals = np.loadtxt('Data/ueffvals.csv',delimiter=',')
+    uaffvals = np.loadtxt('../../Data/uaffvals.csv',delimiter=',')
+    ueffvals = np.loadtxt('../../Data/ueffvals.csv',delimiter=',')
     #######
     
     ### Gets midpoints of histogram bins
@@ -215,25 +215,25 @@ def prob(d, vals,smooth,distributionParams):
 
 def MaffProb(d, maffProb,distributionParams):
     
-    maffvals = np.loadtxt('Data/maffvals.csv',delimiter=',')
+    maffvals = np.loadtxt('../../Data/maffvals.csv',delimiter=',')
     
     return maffProb * prob(d,maffvals,True,distributionParams)
 
 def MeffProb(d, meffProb,distributionParams):
     
-    meffvals = np.loadtxt('Data/meffvalsSmooth.csv',delimiter=',')
+    meffvals = np.loadtxt('../../Data/meffvalsSmooth.csv',delimiter=',')
     
     return meffProb * prob(d,meffvals,True,distributionParams)
 
 def UaffProb(d, uaffProb,distributionParams):
     
-    uaffvals = np.loadtxt('Data/uaffvals.csv',delimiter=',')
+    uaffvals = np.loadtxt('../../Data/uaffvals.csv',delimiter=',')
     
     return uaffProb * prob(d,uaffvals,False,distributionParams)
 
 def UeffProb(d, ueffProb,distributionParams):
     
-    ueffvals = np.loadtxt('Data/ueffvals.csv',delimiter=',')
+    ueffvals = np.loadtxt('../../Data/ueffvals.csv',delimiter=',')
     
     return ueffProb * prob(d,ueffvals,True,distributionParams)
 
@@ -276,7 +276,7 @@ def getFasciclePositions():
     
     fasciclePositions = []
     
-    positions = np.load('Data/fiberPositions1950.npy',allow_pickle=True)
+    positions = np.load('../../Data/fiberPositions1950.npy',allow_pickle=True)
     
     pos = positions[0][1]
     
@@ -331,9 +331,9 @@ def Recruitment(current,diameters, fascIdx):
    
     #### Loads and sorts titration factors from S4L. Sorting is justg to make sure that fibers and fascicles are in numerical order (ie, fiber 0-fiber50, fascicle0-fascicle39)
 
-    titrationFactorsMeff = sortTitrationSpace(pd.read_excel('Data/TitrationGoodConductivity_Standoff_Sideways_HighConductivity.xlsx',index_col=0)).iloc[-1].values
+    titrationFactorsMeff = sortTitrationSpace(pd.read_excel('../../Data/TitrationGoodConductivity_Standoff_Sideways_HighConductivity.xlsx',index_col=0)).iloc[-1].values
     
-    titrationFactorsUaff = sortTitrationSpace(pd.read_excel('Data/TitrationGoodConductivity_Standoff_Sideways_Unmyelinated_HighConductivity.xlsx',index_col=0)).iloc[-1].values
+    titrationFactorsUaff = sortTitrationSpace(pd.read_excel('../../Data/TitrationGoodConductivity_Standoff_Sideways_Unmyelinated_HighConductivity.xlsx',index_col=0)).iloc[-1].values
 
     ####
 
@@ -495,7 +495,7 @@ def FitPhiShape(fascIdx,distance):
     This function creates an interpolation object for the recording exposure
     '''
 
-    phi = pd.read_excel('Data/PhiConductivity_Bipolar_Corrected/'+str(fascIdx)+'_BetterConductivity.xlsx')
+    phi = pd.read_excel('../../Data/PhiConductivity_Bipolar_Corrected/'+str(fascIdx)+'_BetterConductivity.xlsx')
     
     xvals, phiShapeEmpirical = editPhiShape(phi,distance)
 
@@ -667,7 +667,7 @@ def write_fascicle_signals(distribution_params, iteration=0, index=0):
     distance = distances[distanceIdx]
     
     ### Loads action potential shapes in time
-    ap = pd.read_excel('Data/APShape20.xlsx') # Rat
+    ap = pd.read_excel('../../Data/APShape20.xlsx') # Rat
     ####
 
     aps = [ap]
