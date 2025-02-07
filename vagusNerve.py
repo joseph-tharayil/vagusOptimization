@@ -22,9 +22,9 @@ def get_error(signal):
 
     rawSignal /= np.max(np.abs(rawSignal))
     
-    tmin=-3 # In s
-    tmax=3 # In s
-    nx=500000
+    tmin=-.5 # In s
+    tmax=.5 # In s
+    nx=50000
     tphi=np.arange(tmin,tmax,(tmax-tmin)/(nx-1))
     
     time = tphi[1:-1]*1e3
@@ -44,11 +44,11 @@ def run_vagus_nerve(analytic_input):
     numcores = mp.cpu_count()
 
     with mp.Pool(numcores-4) as p:
-        p.map(partial(write_fascicle_signals,distribution_params=analytic_input),np.arange(39))
+        signals = p.map(partial(write_fascicle_signals,distribution_params=analytic_input),np.arange(39))
 
     #write_fascicle_signals(analytic_input)
 
-    signal = combine_signals()
+    signal = combine_signals(signals)
 
     error = get_error(signal)
     #allError = np.load('allError.npy')

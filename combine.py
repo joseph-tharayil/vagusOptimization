@@ -2,19 +2,23 @@ import numpy as np
 
 import sys
 
-def combine_signals():
+def combine_signals(signals):
 
     iteration = 0
 
     names = ['maff','meff']
 
-    totalSignal = 0
+    for i, s in enumerate(signals):
+        if i == 0:
+            totalSignal = s
+        else:
+            totalSignal += s
 
-    for typeIdx in range(2):
+    #for typeIdx in range(2):
 
-        for fascIdx in range(39):
+        #for fascIdx in range(39):
 
-            totalSignal += np.load('signals/'+names[typeIdx]+'/signals_'+str(fascIdx)+'.npy')
+            #totalSignal += np.load('signals/'+names[typeIdx]+'/signals_'+str(fascIdx)+'.npy')
 
     return totalSignal
 

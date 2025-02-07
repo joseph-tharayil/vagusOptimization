@@ -199,8 +199,6 @@ def prob(d, vals,smooth,distributionParams):
     if smooth:
 
         params = curve_fit(gammaDist,d*1e6,interpD*10,p0=[9,0.5])
-
-        print(params)
                         
         #interpD = gammaDist(d*1e6,params[0][0],params[0][1]) * 0.1
         interpD = gammaDist(d*1e6,distributionParams[0],distributionParams[1]) * 0.1
@@ -673,10 +671,10 @@ def write_fascicle_signals(fascIdx,distribution_params):
 
     aps = [ap]
 
-    nx=100000
+    nx=50000
 
-    tmin=-1 # In s
-    tmax=1 # In s
+    tmin=-.5 # In s
+    tmax=.5 # In s
     tphi=np.arange(tmin,tmax,(tmax-tmin)/(nx-1))
 
     current = np.array([500])/28.6
@@ -756,12 +754,14 @@ def write_fascicle_signals(fascIdx,distribution_params):
     
     signals /= recordingCurrent
 
+    return np.sum(signals,axis=0)
 
-    names = ['maff','meff']
 
-    for typeIdx in range(len(names)):
+    #names = ['maff','meff']
 
-        np.save('signals/'+names[typeIdx]+'/signals_'+str(fascIdx)+'.npy',signals[typeIdx])
+    #for typeIdx in range(len(names)):
+
+        #np.save('signals/'+names[typeIdx]+'/signals_'+str(fascIdx)+'.npy',signals[typeIdx])
 
 
 if __name__=="__main__":
