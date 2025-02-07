@@ -3,11 +3,13 @@ from combine import combine_signals
 import numpy as np
 from scipy.io import loadmat
 from scipy.stats import wasserstein_distance
+import multiprocessing as mp
+from functools import partial
 
 def get_error(signal):
 
     
-    rawData = loadmat('/gpfs/bbp.cscs.ch/project/proj85/vagusNerve/vagusNerveCode/eCAPSdata_220303.mat')
+    rawData = loadmat('Data/eCAPSdata_220303.mat')
     a500 = list(rawData['eCAPSdata_220328'][0][-5])
     
     rawSignal = a500[1][-1]-a500[1][0]
@@ -39,7 +41,12 @@ def get_error(signal):
 
 def run_vagus_nerve(analytic_input):
 
-    write_fascicle_signals(analytic_input)
+    numcores = mp.cpu_count()
+
+    with mp.Pool(numcores-4) as p:
+        p.map(partial(write_fascicle_signals,distribution_params=analytic_input),np.arange(39))
+
+    #write_fascicle_signals(analytic_input)
 
     signal = combine_signals()
 

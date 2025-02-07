@@ -1,10 +1,8 @@
 import numpy as np
-from mpi4py import MPI
+
 import sys
 
 def combine_signals():
-
-    rank = MPI.COMM_WORLD.Get_rank()
 
     iteration = 0
 

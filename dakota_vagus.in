@@ -13,7 +13,7 @@ variables
 
 interface
 	fork
-	  analysis_drivers = 'driver.sh'
+	  analysis_drivers = 'powershell.exe -ExecutionPolicy Bypass -File driver.ps1'
 	  parameters_file = 'params.in'
 	  results_file    = 'results.out'
 	   
