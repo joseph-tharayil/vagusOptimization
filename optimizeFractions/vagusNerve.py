@@ -9,7 +9,7 @@ from functools import partial
 def get_error(signal):
 
     
-    rawData = loadmat('Data/eCAPSdata_220303.mat')
+    rawData = loadmat('../Data/eCAPSdata_220303.mat')
     a500 = list(rawData['eCAPSdata_220328'][0][-5])
     
     rawSignal = a500[1][-1]-a500[1][0]

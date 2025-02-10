@@ -2,11 +2,10 @@
 
 method
 	coliny_ea
-    max_iterations = 1
 
 variables
 	  continuous_design = 4
-	  initial_point   1   0.59    2   0.428    
+	  initial_point   5.7   0.59    7.98   0.428    
 	  lower_bounds    0      0      0      0. 
       upper_bounds    20      1      20      1 
 	  descriptor      'x0'     'y0'      'x1'      'y1'
