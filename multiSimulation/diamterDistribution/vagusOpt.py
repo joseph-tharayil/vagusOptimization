@@ -12,7 +12,7 @@ def get_error(signalList):
 
     for simulation in range(10):
   
-        rawSignal = np.load('groundTruth/Signals_Stim'+str(simulation)+'.npy')
+        rawSignal = np.load('../groundTruth/Signals_Stim'+str(simulation)+'.npy')
 
         rawSignal /= np.max(np.abs(rawSignal))
 
