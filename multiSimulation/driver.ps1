@@ -3,7 +3,7 @@
 # Load necessary modules (equivalent of `module load`)
 # Adjust as necessary based on your system's environment module setup
 $env:PATH += ";C:\Path\To\Python\bin"
-$env:VIRTUAL_ENV = "D:\dakotaEnv"
+$env:VIRTUAL_ENV = "D:\vagusNervePackage\vagusEnv"
 . "$env:VIRTUAL_ENV\Scripts\activate"
 
 $install_dir = "D:\Dakota"  # Replace with the actual installation directory

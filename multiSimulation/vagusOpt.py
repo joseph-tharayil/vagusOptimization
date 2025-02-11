@@ -10,17 +10,17 @@ def get_error(signalList):
 
     totalDistance = 0
 
-    for simulation in range(10):
+    for simulation in range(1):
   
         rawSignal = np.load('groundTruth/Signals_Stim'+str(simulation)+'.npy')
 
         rawSignal /= np.max(np.abs(rawSignal))
 
-    signal = signalList[simulation]
+        signal = signalList[simulation]
     
-    signal /= np.max(np.abs(signal))
+        signal /= np.max(np.abs(signal))
 
-    totalDistance += wasserstein_distance(rawSignal,signal)
+        totalDistance += wasserstein_distance(rawSignal[0,0],signal[0,0])
 
     return totalDistance #np.min(np.sum(np.abs(rawSignal-signal)))
 
@@ -35,12 +35,12 @@ def run_vagus_nerve(analytic_input):
 
     signalList = []
 
-    for simulation in range(10):
+    for simulation in range(1):
 
         stim = {
                 'current': [500 / currents[simulation]],  # Convert NumPy array to float
                 'stimulusDirectory': {
-                "myelinated": r"D:\vagusNerve\VerticalElectrode\Titration_Sim" + str(simulation) + ".xlsx"
+                "myelinated": r"D:\vagusOptimization\multiSimulation\Titration\Titration_Sim" + str(simulation) + ".xlsx"
                  }
                 }
 
