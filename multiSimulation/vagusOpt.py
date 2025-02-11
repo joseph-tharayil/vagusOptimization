@@ -1,4 +1,4 @@
-from vagusNerve import runSim
+from vagusNerve.runSim import runSim
 from combine import combine_signals
 import numpy as np
 from scipy.io import loadmat
@@ -12,20 +12,20 @@ def get_error(signalList):
 
     for simulation in range(10):
   
-        rawSignal = np.load('groundTruth/Signals_Stim'+str(simulation)+'npy')
+        rawSignal = np.load('groundTruth/Signals_Stim'+str(simulation)+'.npy')
 
         rawSignal /= np.max(np.abs(rawSignal))
 
-	signal = signalList[simulation]
+    signal = signalList[simulation]
     
-        signal /= np.max(np.abs(signal))
+    signal /= np.max(np.abs(signal))
 
-	totalDistance += wasserstein_distance(rawSignal,signal)
+    totalDistance += wasserstein_distance(rawSignal,signal)
 
     return totalDistance #np.min(np.sum(np.abs(rawSignal-signal)))
 
-def runSim_wrapper(fascIdx, stim, rec):
-    return runSim(fascIdx, stim, rec, 2000)  # Pass correct arguments
+def runSim_wrapper(fascIdx, stim, rec, params):
+    return runSim(0, stim, rec, fascIdx,params, 2000)  # Pass correct arguments
 
 def run_vagus_nerve(analytic_input):
 
@@ -44,13 +44,13 @@ def run_vagus_nerve(analytic_input):
                  }
                 }
 
-         rec = {
+        rec = {
                 'recordingCurrent': 509e-6,
-                'recordingDirectory': '../../Data/PhiConductivity_Bipolar_Corrected/'
+                'recordingDirectory': '../Data/PhiConductivity_Bipolar_Corrected/'
                 }
 
         with mp.Pool(numcores-4) as p:
-            signals = p.starmap(runSim_wrapper, [(i, stim, rec) for i in np.arange(39)])
+            signals = p.starmap(runSim_wrapper, [(i, stim, rec, analytic_input) for i in np.arange(39)])
 
         signal = combine_signals(signals)
         signalList.append(signal)
@@ -77,4 +77,3 @@ def run_vagus_nerve(analytic_input):
     np.save('allInputs.npy',allInputs)
 
     return error
-    
