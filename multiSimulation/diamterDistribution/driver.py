@@ -4,13 +4,13 @@ from vagusOpt import run_vagus_nerve
 
 def get_input(params):
 
-    fascicleParams = []
+    fiberTypeParams = []
 
-    for fascicle in range(39):
+    for fiberType in range(2):
 
-        fascicleParams.append( params['x'+str(fascicle)] )
+        fiberTypeParams.append( [params['x'+str(fiberType)],params['y'+str(fiberType)]] )
 
-    return fascicleParams
+    return fiberTypeParams
 
 def pack_dakota_results(analytic_output,results):
 
@@ -26,7 +26,7 @@ def main():
 
     analytic_input = get_input(params)
 
-    distribution_params = {'maff':{'diameterParams':None, 'fiberTypeFractions':analytic_input},'meff':{'diameterParams':None, 'fiberTypeFractions':None}}
+    distribution_params = {'maff':{'diameterParams':analytic_input[0], 'fiberTypeFractions':None},'meff':{'diameterParams':analytic_input[1], 'fiberTypeFractions':None}}
 
     analytic_output = run_vagus_nerve(distribution_params)
 

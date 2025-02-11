@@ -1,0 +1,22 @@
+#  DAKOTA INPUT FILE - dakota_vagus.in
+
+method
+	coliny_ea
+
+variables
+	  continuous_design = 4
+	  initial_point   5.7   0.59    7.98   0.428    
+	  lower_bounds    0      0      0      0. 
+      upper_bounds    20      1      20      1 
+	  descriptor      'x0'     'y0'      'x1'      'y1'
+
+interface
+	fork
+	  analysis_drivers = 'powershell.exe -ExecutionPolicy Bypass -File driver.ps1'
+	  parameters_file = 'params.in'
+	  results_file    = 'results.out'
+	   
+responses
+	num_objective_functions = 1
+	no_gradients
+	no_hessians
