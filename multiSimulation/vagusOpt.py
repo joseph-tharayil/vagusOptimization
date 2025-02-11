@@ -1,0 +1,80 @@
+from vagusNerve import runSim
+from combine import combine_signals
+import numpy as np
+from scipy.io import loadmat
+from scipy.stats import wasserstein_distance
+import multiprocessing as mp
+from functools import partial
+
+def get_error(signalList):
+
+    totalDistance = 0
+
+    for simulation in range(10):
+  
+        rawSignal = np.load('groundTruth/Signals_Stim'+str(simulation)+'npy')
+
+        rawSignal /= np.max(np.abs(rawSignal))
+
+	signal = signalList[simulation]
+    
+        signal /= np.max(np.abs(signal))
+
+	totalDistance += wasserstein_distance(rawSignal,signal)
+
+    return totalDistance #np.min(np.sum(np.abs(rawSignal-signal)))
+
+def runSim_wrapper(fascIdx, stim, rec):
+    return runSim(fascIdx, stim, rec, 2000)  # Pass correct arguments
+
+def run_vagus_nerve(analytic_input):
+
+    currents = [24.38, 23.07, 23.79, 23.19, 22.1, 23.97, 22.7, 22.95, 20.84, 23.89]
+
+    numcores = mp.cpu_count()
+
+    signalList = []
+
+    for simulation in range(10):
+
+        stim = {
+                'current': [500 / currents[simulation]],  # Convert NumPy array to float
+                'stimulusDirectory': {
+                "myelinated": r"D:\vagusNerve\VerticalElectrode\Titration_Sim" + str(simulation) + ".xlsx"
+                 }
+                }
+
+         rec = {
+                'recordingCurrent': 509e-6,
+                'recordingDirectory': '../../Data/PhiConductivity_Bipolar_Corrected/'
+                }
+
+        with mp.Pool(numcores-4) as p:
+            signals = p.starmap(runSim_wrapper, [(i, stim, rec) for i in np.arange(39)])
+
+        signal = combine_signals(signals)
+        signalList.append(signal)
+
+    error = get_error(signalList)
+
+    try:
+        allSignals = np.load('allSignal.npy')
+        allError = np.load('allError.npy')
+        allInputs = np.load('allInputs.npy')
+
+        allSignals = np.vstack((allSignals,signal))
+        allError = np.vstack((allError,error))
+        allInputs = np.vstack((allInputs,[analytic_input]))
+        
+    except:
+        allSignals = signal
+        allError = error
+        allInputs = [analytic_input]
+
+    np.save('allSignal.npy',allSignals)
+
+    np.save('allError.npy',allError)
+    np.save('allInputs.npy',allInputs)
+
+    return error
+    
