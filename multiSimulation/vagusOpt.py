@@ -10,7 +10,7 @@ def get_error(signalList):
 
     totalDistance = 0
 
-    for simulation in range(1):
+    for simulation in range(10):
   
         rawSignal = np.load('groundTruth/Signals_Stim'+str(simulation)+'.npy')
 
@@ -35,7 +35,7 @@ def run_vagus_nerve(analytic_input):
 
     signalList = []
 
-    for simulation in range(1):
+    for simulation in range(10):
 
         stim = {
                 'current': [500 / currents[simulation]],  # Convert NumPy array to float

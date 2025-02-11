@@ -26,7 +26,9 @@ def main():
 
     analytic_input = get_input(params)
 
-    analytic_output = run_vagus_nerve(analytic_input)
+    distribution_params = {'maff':{'diameter_params':None, 'fiberTypeFractions':analytic_input},'meff':{'diameter_params':None, 'fiberTypeFractions':None}}
+
+    analytic_output = run_vagus_nerve(distribution_params)
 
     results = pack_dakota_results(analytic_output,results)
     results.write()
