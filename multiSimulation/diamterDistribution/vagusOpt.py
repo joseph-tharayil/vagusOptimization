@@ -64,12 +64,12 @@ def run_vagus_nerve(analytic_input):
 
         allSignals = np.vstack((allSignals,signal))
         allError = np.vstack((allError,error))
-        allInputs = np.vstack((allInputs,[analytic_input]))
+        allInputs = np.vstack((allInputs,[analytic_input['maff']['diameterParams']]))
         
     except:
         allSignals = signal
         allError = error
-        allInputs = [analytic_input]
+        allInputs = [analytic_input['maff']['diameterParams']]
 
     np.save('allSignal.npy',allSignals)
 

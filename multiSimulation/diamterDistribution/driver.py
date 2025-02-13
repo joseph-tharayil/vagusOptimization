@@ -6,7 +6,7 @@ def get_input(params):
 
     fiberTypeParams = []
 
-    for fiberType in range(2):
+    for fiberType in range(1):
 
         fiberTypeParams.append( [params['x'+str(fiberType)],params['y'+str(fiberType)]] )
 
@@ -26,7 +26,7 @@ def main():
 
     analytic_input = get_input(params)
 
-    distribution_params = {'maff':{'diameterParams':analytic_input[0], 'fiberTypeFractions':None},'meff':{'diameterParams':analytic_input[1], 'fiberTypeFractions':None}}
+    distribution_params = {'maff':{'diameterParams':analytic_input[0], 'fiberTypeFractions':None},'meff':{'diameterParams':None, 'fiberTypeFractions':None}}
 
     analytic_output = run_vagus_nerve(distribution_params)
 
