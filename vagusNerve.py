@@ -20,7 +20,7 @@ def get_error(signal):
     rawTime = rawTime[timeLimits]
     rawSignal = rawSignal[timeLimits]
 
-    rawSignal /= np.max(np.abs(rawSignal))
+#    rawSignal /= np.max(np.abs(rawSignal))
     
     tmin=-.5 # In s
     tmax=.5 # In s
@@ -35,7 +35,7 @@ def get_error(signal):
 
     signal = signal[0,indices]
 
-    signal /= np.max(np.abs(signal))
+ #   signal /= np.max(np.abs(signal))
 
     return wasserstein_distance(rawSignal,signal) #np.min(np.sum(np.abs(rawSignal-signal)))
 
@@ -53,9 +53,9 @@ def run_vagus_nerve(analytic_input):
     error = get_error(signal)
 
     try:
-        allSignals = np.load('allSignal.npy')
-        allError = np.load('allError.npy')
-        allInputs = np.load('allInputs.npy')
+        allSignals = np.load('allSignal_noScaling.npy')
+        allError = np.load('allError_noScaling.npy')
+        allInputs = np.load('allInputs_noScaling.npy')
 
         allSignals = np.vstack((allSignals,signal))
         allError = np.vstack((allError,error))
@@ -66,10 +66,10 @@ def run_vagus_nerve(analytic_input):
         allError = error
         allInputs = [analytic_input]
 
-    np.save('allSignal.npy',allSignals)
+    np.save('allSignal_noScaling.npy',allSignals)
 
-    np.save('allError.npy',allError)
-    np.save('allInputs.npy',allInputs)
+    np.save('allError_noScaling.npy',allError)
+    np.save('allInputs_noScaling.npy',allInputs)
 
     return error
     

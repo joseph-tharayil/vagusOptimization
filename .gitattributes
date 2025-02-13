@@ -23,3 +23,6 @@ multiSimulation/groundTruth/Signals_Stim2.npy filter=lfs diff=lfs merge=lfs -tex
 multiSimulation/groundTruth/Signals_Stim3.npy filter=lfs diff=lfs merge=lfs -text
 multiSimulation/groundTruth/Signals_Stim5.npy filter=lfs diff=lfs merge=lfs -text
 multiSimulation/groundTruth/Signals_Stim8.npy filter=lfs diff=lfs merge=lfs -text
+allError_noScaling.npy filter=lfs diff=lfs merge=lfs -text
+allInputs_noScaling.npy filter=lfs diff=lfs merge=lfs -text
+allSignal_noScaling.npy filter=lfs diff=lfs merge=lfs -text
