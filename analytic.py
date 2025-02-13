@@ -24,6 +24,7 @@ import quantities as pq
 
 import sys
 import time
+from memory_profiler import profile
 
 def getAreaScaleFactor():
     
@@ -200,7 +201,6 @@ def prob(d, vals,smooth,distributionParams):
 
         params = curve_fit(gammaDist,d*1e6,interpD*10,p0=[9,0.5])
 
-        print(params)
                         
         #interpD = gammaDist(d*1e6,params[0][0],params[0][1]) * 0.1
         interpD = gammaDist(d*1e6,distributionParams[0],distributionParams[1]) * 0.1
@@ -650,8 +650,8 @@ def getVs(aps,tphi): # Interpolates AP shapes in time for myelinated and unmyeli
         
     return Vs
 
-    
-def write_fascicle_signals(distribution_params, iteration=0, index=0):
+@profile    
+def write_fascicle_signals(distribution_params=np.array([[5.,1.],[5.,1.]]), iteration=0, index=0):
      
     t= time.time()
    
@@ -718,16 +718,11 @@ def write_fascicle_signals(distribution_params, iteration=0, index=0):
     scaling00 = phiWeight0.T*scaling0[:,np.newaxis]
     scaling10 = phiWeight1.T*scaling0[:,np.newaxis]
 
-    print(phiShape0.shape)
-    print(scaling00.shape) 
     
-    t = time.time()
     phi0 = np.matmul(phiShape0.T,scaling00)
-    print(time.time()-t)
     
     phi1 = np.matmul(phiShape0.T,scaling10)
 
-    print(time.time()-t)
 
     phi = np.array([phi0,phi1])
     print(phi.size*phi.itemsize)
@@ -769,25 +764,8 @@ def write_fascicle_signals(distribution_params, iteration=0, index=0):
     for typeIdx in range(len(names)):
 
         np.save('signals/'+names[typeIdx]+'/signals_'+str(fascIdx)+'.npy',signals[typeIdx])
-
+    print(time.time()-t)
 
 if __name__=="__main__":
 
-    iteration = int(sys.argv[1])
-    
-    x0s = np.linspace(5,7,num=6)
-    y0s = np.linspace(0.5,0.7,num=6)
-
-    x1s = np.linspace(7.5,9.5,num=6) 
-    y1s = np.linspace(0.4,0.6,num=6)
-
-    index = 0
-
-    x0 = x0s[iteration]
-    for y0 in y0s:
-        for x1 in x1s:
-            for y1 in y1s:
-
-                fascicle_mapping = np.array([[x0,y0],[x1,y1]])# np.array([[5.7,.59],[7.98,.42]])
-                write_fascicle_signals(fascicle_mapping,iteration,index)
-                index += 1
+    write_fascicle_signals()
