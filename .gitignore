@@ -1,4 +1,5 @@
 Data/
+*.npy
 *.out
 *.swp
 .ipynb_checkpoints/

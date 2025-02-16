@@ -14,11 +14,11 @@ def get_error(signalList):
   
         rawSignal = np.load('groundTruth/Signals_Stim'+str(simulation)+'.npy')
 
-        rawSignal /= np.max(np.abs(rawSignal))
+        #rawSignal /= np.max(np.abs(rawSignal))
 
         signal = signalList[simulation]
     
-        signal /= np.max(np.abs(signal))
+        #signal /= np.max(np.abs(signal))
 
         totalDistance += wasserstein_distance(rawSignal[0,0],signal[0,0])
 
@@ -56,18 +56,18 @@ def run_vagus_nerve(analytic_input):
         signalList.append(signal)
 
     error = get_error(signalList)
-
+    signalList = np.array(signalList)
     try:
         allSignals = np.load('allSignal.npy')
         allError = np.load('allError.npy')
         allInputs = np.load('allInputs.npy')
 
-        allSignals = np.vstack((allSignals,signal))
+        allSignals = np.vstack((allSignals,signalList))
         allError = np.vstack((allError,error))
         allInputs = np.vstack((allInputs,[analytic_input]))
         
     except:
-        allSignals = signal
+        allSignals = signalList
         allError = error
         allInputs = [analytic_input]
 
