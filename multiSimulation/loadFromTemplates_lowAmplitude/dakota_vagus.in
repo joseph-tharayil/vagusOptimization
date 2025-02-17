@@ -1,0 +1,23 @@
+#  DAKOTA INPUT FILE - dakota_vagus.in
+
+method
+	mesh_adaptive_search
+
+variables
+	  continuous_design = 78
+	  initial_point   0	0	0	0	0	0	0	15	0	0	15	15	0	15	0	15	0	15	0	0	15	15	15	15	15	15	15	15	15	15	15	15	15	15	15	15	15	15	15    10      10    10	   10	10	10	10	0	10	10	0	0	10	0	10	0	10	0	10	10	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	
+	  lower_bounds    0      0      0      0	0	0	0	10	0	0 	10	10	0	10	0	0	0	10	0	0	10	10	10	10	10	10	10	10	10	10	10	10	10	10	10	10	10	10	10    7.5     7.5   7.5     7.5  7.5	7.5	7.5	0	7.5	7.5	0 	0	7.5	0	7.5	0	7.5	0	7.5	7.5	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0	0		
+          upper_bounds    10     10     10     10	10	10	10	20	10	10 	20	20	10	20	10	20	10	20	10	10	20	20	20	20	20	20	20	20	20	20	20	20	20	20	20	20	20	20	20    20     20      20     20	20	20	20	2	20	20 	2	2	20	2	20	2	20	2	20	20	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2	2
+	  descriptor      'x0'   'x1'   'x2'   'x3'	'x4'	'x5'	'x6'	'x7'	'x8'	'x9'	'x10'	'x11'	'x12'	'x13'	'x14'	'x15'	'x16'	'x17'	'x18'	'x19'	'x20'	'x21'   'x22'   'x23'	'x24'	'x25'	'x26'	'x27'	'x28'	'x29'	'x30'	'x31'	'x32'	'x33'	'x34'	'x35'	'x36'	'x37'	'x38' 'y0' 'y1'  'y2'    'y3'	'y4'	'y5'	'y6'	'y7'	'y8'	'y9'	'y10'	'y11'	'y12'	'y13'	'y14'	'y15'	'y16'	'y17'	'y18'	'y19'	'y20'	'y21'   'y22'   'y23'	'y24'	'y25'	'y26'	'y27'	'y28'	'y29'	'y30'	'y31'	'y32'	'y33'	'y34'	'y35'	'y36'	'y37'	'y38'
+
+
+interface
+	fork
+	  analysis_drivers = 'powershell.exe -ExecutionPolicy Bypass -File driver.ps1'
+	  parameters_file = 'params.in'
+	  results_file    = 'results.out'
+	   
+responses
+	num_objective_functions = 1
+	no_gradients
+	no_hessians
