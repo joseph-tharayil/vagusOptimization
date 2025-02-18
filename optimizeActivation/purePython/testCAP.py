@@ -1,6 +1,5 @@
 import multiprocessing as mp
 from vagusNerve.runSim import runSim
-from combine import combine_signals
 import numpy as np
 from functools import partial
 
@@ -13,7 +12,7 @@ def runSim_wrapper(fascIdx, stim, rec):
 
 if __name__ == "__main__":  # ✅ Prevent multiprocessing issues
         currents = [24.38, 23.07, 23.79, 23.19, 22.1, 23.97, 22.7, 22.95, 20.84, 23.89]
-        stimuli = np.load('optimizedResults.npy',allow_pickle=True).item()['x']
+        stimuli = np.load('optimizedResult.npy',allow_pickle=True).item()['x']
 
         for simulation in range(10):
             stim = {
@@ -32,5 +31,5 @@ if __name__ == "__main__":  # ✅ Prevent multiprocessing issues
                 signals = p.starmap(runSim_wrapper, [(i, stim, rec) for i in np.arange(39)])  # ✅ Use starmap for multiple arguments
             
             for i, signal in enumerate(signals):
-                np.save('Signals_Stim' + str(simulation) +-"_Fasc"+str(i)+ ".npy", np.array(total))  # Ensure it's a NumPy array
+                np.save('Signals_Stim' + str(simulation) +"_Fasc"+str(i)+ ".npy", signal)  # Ensure it's a NumPy array
 
