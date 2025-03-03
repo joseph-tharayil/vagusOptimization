@@ -27,7 +27,7 @@ def get_error(signalList):
 def get_error_raw(signal):
 
     
-    rawData = loadmat('Data/eCAPSdata_220303.mat')
+    rawData = loadmat('../Data/eCAPSdata_220303.mat')
     a500 = list(rawData['eCAPSdata_220328'][0][-5])
     
     rawSignal = a500[1][-1]-a500[1][0]
@@ -51,7 +51,8 @@ def get_error_raw(signal):
     for t in rawTime:
         indices.append(np.argmin(np.abs(time-t)))
 
-    signal = signal[0,indices]
+    print(signal[0].shape)
+    signal = signal[0][0,0,indices]
 
  #   signal /= np.max(np.abs(signal))
 

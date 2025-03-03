@@ -1,71 +1,35 @@
+import dakota.interfacing as di
 import numpy as np
-from scipy.io import loadmat
-from scipy.stats import wasserstein_distance
+from vagusOpt import run_vagus_nerve
 
+def get_input(params):
 
-def get_error(signalList):
+    fascicleParams = []
 
-    totalDistance = 0
+    for fascicle in range(39):
 
-    time = np.linspace(-.5,.5,49997)*1e3
-    timeIdx = np.intersect1d(np.where(time>0),np.where(time<10))
+        fascicleParams.append( [params['x'+str(fascicle)], params['y'+str(fascicle)]] )
 
-    for simulation in range(10):
-  
-        rawSignal = np.load('../groundTruth_fix_numFibers/Signals_Stim'+str(simulation)+'.npy')
+    return fascicleParams
 
-        #rawSignal /= np.max(np.abs(rawSignal))
+def pack_dakota_results(analytic_output,results):
 
-        signal = signalList[simulation]
-    
-        #signal /= np.max(np.abs(signal))
+    for i, label in enumerate(results):
+        if results[label].asv.function:
+            results[label].function = analytic_output
 
-        totalDistance += wasserstein_distance(rawSignal[0,0][timeIdx],signal[timeIdx])
+    return results
 
-    return totalDistance #np.min(np.sum(np.abs(rawSignal-signal)))
+def main():
 
-def runSim_wrapper(fascIdx, stim, rec, params):
-    return runSim(0, stim, rec, fascIdx,params, 2000)  # Pass correct arguments
+    params, results = di.read_parameters_file(parameters_file='params.in',results_file='results.out')
 
-def run_vagus_nerve(analytic_input):
+    analytic_input = get_input(params)
 
-    signalList = []
+    analytic_output = run_vagus_nerve(analytic_input)
 
-    for simulation in range(10):
+    results = pack_dakota_results(analytic_output,results)
+    results.write()
 
-        for fasc in range(39):
-            maffFrac = analytic_input[fasc][0]*.01
-            meffFrac = analytic_input[fasc][1]*.01
-
-            sigMaff = np.load('../templates/Signals_Stim'+str(simulation)+'_'+str(fasc)+'_maff.npy')*maffFrac
-            sigMeff = np.load('../templates/Signals_Stim'+str(simulation)+'_'+str(fasc)+'_meff.npy')*meffFrac
-
-            if fasc == 0:
-                signal = sigMaff + sigMeff
-            else:
-                signal += sigMaff + sigMeff
-
-        signalList.append(signal)
-
-    error = get_error(signalList)
-    signalList = np.array(signalList)
-    try:
-        allSignals = np.load('allSignal_unconstrained.npy')
-        allError = np.load('allError_unconstrained.npy')
-        allInputs = np.load('allInputs_unconstrained.npy')
-
-        allSignals = np.vstack((allSignals,[signalList]))
-        allError = np.vstack((allError,error))
-        allInputs = np.vstack((allInputs,[analytic_input]))
-        
-    except:
-        allSignals = [signalList]
-        allError = error
-        allInputs = [analytic_input]
-
-    np.save('allSignal_unconstrained.npy',allSignals)
-
-    np.save('allError_unconstrained.npy',allError)
-    np.save('allInputs_unconstrained.npy',allInputs)
-
-    return error
+if __name__=='__main__':
+    main()

@@ -8,7 +8,7 @@ def get_input(params):
 
     for fascicle in range(39):
 
-        fascicleParams.append( params['maffM'+str(fascicle),'maffS'+str(fascicle),'meffM'+str(fascicle),'meffS'+str(fascicle)] )
+        fascicleParams.append( [params['maffM'+str(fascicle)],params['maffS'+str(fascicle)],params['meffM'+str(fascicle)],params['meffS'+str(fascicle)]] )
 
     return np.array(fascicleParams)
 
