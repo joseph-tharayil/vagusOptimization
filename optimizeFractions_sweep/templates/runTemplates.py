@@ -11,9 +11,9 @@ def runSim_wrapper(fascIdx, stim, rec):
     return runSim(0,stim, rec, fascIdx,distribution_params,2000)  # Pass correct arguments
 
 if __name__ == "__main__":  # ✅ Prevent multiprocessing issues
-        currents = [2]
+        currents = [2,4,6,8,10]
 
-        for simulation in range(len(currents)):
+        for simulation in np.arange(1,len(currents)):
             stim = {'current':[currents[simulation]*10/173],
                     'stimulusDirectory':{
                        "myelinated":'../../Data/TitrationBetterConductivity_Standoff_HighConductivity.xlsx'

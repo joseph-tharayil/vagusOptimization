@@ -13,8 +13,8 @@ def runSim_wrapper(fascIdx, stim, rec):
 
 if __name__ == "__main__":  # ✅ Prevent multiprocessing issues
 
-    currents = [2]    
-    for simulation in range(len(currents))[:1]:
+    currents = [500 ]   
+    for simulation in np.arange(len(currents)):
         stim = {'current':[currents[simulation]*10/173],
                     'stimulusDirectory':{
                     "myelinated":'../../Data/TitrationBetterConductivity_Standoff_HighConductivity.xlsx'
@@ -28,5 +28,5 @@ if __name__ == "__main__":  # ✅ Prevent multiprocessing issues
         with mp.Pool(num_workers) as p:
             signals = p.starmap(runSim_wrapper, [(i, stim, rec) for i in np.arange(39)])  # ✅ Use starmap for multiple arguments
         total = combine_signals(signals)
-        np.save('Signals_Stim_a' + str(simulation) + ".npy", np.array(total))  # Ensure it's a NumPy array
+        np.save('Signals_Stim_' + str(currents[simulation]) + ".npy", np.array(total))  # Ensure it's a NumPy array
 
