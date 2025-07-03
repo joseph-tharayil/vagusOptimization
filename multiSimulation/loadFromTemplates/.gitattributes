@@ -1,6 +1,0 @@
-allError_unconstrained.npy filter=lfs diff=lfs merge=lfs -text
-allInputs.npy filter=lfs diff=lfs merge=lfs -text
-allInputs_unconstrained.npy filter=lfs diff=lfs merge=lfs -text
-allSignal.npy filter=lfs diff=lfs merge=lfs -text
-allSignal_unconstrained.npy filter=lfs diff=lfs merge=lfs -text
-allError.npy filter=lfs diff=lfs merge=lfs -text
