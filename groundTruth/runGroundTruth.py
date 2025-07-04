@@ -17,12 +17,12 @@ if __name__ == "__main__":  # ✅ Prevent multiprocessing issues
     for simulation in np.arange(len(currents)):
         stim = {'current':[currents[simulation]*10/173],
                     'stimulusDirectory':{
-                    "myelinated":'../../Data/TitrationBetterConductivity_Standoff_HighConductivity.xlsx'
+                    "myelinated":'path/to/titration.xlsx'
                      }
                    }
         rec = {
                    'recordingCurrent': 509e-6,
-                   'recordingDirectory': '../../Data/PhiConductivity_Bipolar_Corrected/'
+                   'recordingDirectory': 'path/to/folder/with/sensitivityFiles/'
                   }
 
         with mp.Pool(num_workers) as p:

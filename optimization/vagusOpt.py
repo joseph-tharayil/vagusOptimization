@@ -13,7 +13,7 @@ def get_error(signalList):
 
     for simulation in range(1):
   
-        rawSignal = np.load('../optimizeFractions_sweep/groundTruth/Signals_Stim_500.npy')
+        rawSignal = np.load('../groundTruth/Signals_Stim_500.npy')
 
         #rawSignal /= np.max(np.abs(rawSignal))
 
@@ -40,14 +40,14 @@ def run_vagus_nerve(analytic_input):
 
         stim = {'current':[500*10/173],
                 'stimulusDirectory':{
-                    "myelinated":'../Data/TitrationBetterConductivity_Standoff_HighConductivity.xlsx'
+                    "myelinated":'path/to/titration.xlsx'
                 }
                }
 
 
         rec = {
                 'recordingCurrent': 509e-6,
-                'recordingDirectory': '../Data/PhiConductivity_Bipolar_Corrected/'
+                'recordingDirectory': 'path/to/folder/with/sensitivityFiles/'
                 }
 
         with mp.Pool(numcores-4) as p:
