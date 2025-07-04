@@ -11,7 +11,7 @@ This code is configured to run on Windows. In principle it can be run on Linux o
 This code depends on [Dakota](https://dakota.sandia.gov/), as well as on the vagus nerve models from <https://github.com/joseph-tharayil/vagusNerve>
 
 ## Replicating results from the paper
-Our goal is to infer the shape and scale parameters of the 
+Our goal is to infer the shape and scale parameters of the distribution of myelinated afferent fibers in the vagus nerve. First we generate a ``reference" eCAP, by running the script `groundTruth/runGroundTruth.py`. You must configure this script by providing the path to the inputs to the vagus nerve model, namely the titration output file and the sensitivity files, both of which are described in the vagus nerve model [Readme](https://github.com/joseph-tharayil/vagusNerve/blob/main/README.md).
 
 
 # Citation
